@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singapore Attractions</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="sidebar">
+
+    <h2>My Title</h2>
+
+    <button class="category-btn" data-category="Nature">Nature</button>
+    <button class="category-btn" data-category="Food">Food</button>
+    <button class="category-btn" data-category="Malls">Mall</button>
+    <button class="category-btn" data-category="Landmarks">Landmark</button>
+
+    <div id="card-container"></div>
+
+  </div>
+
+  <div class="map-container">
+
+    <div class="search-wrapper">
+      <input type="text" id="search-input" placeholder="Search attractions...">
+      <i class="fa-solid fa-camera"></i>
+      <i class="fa-solid fa-microphone"></i>
+    </div>
+
+    <div id="map"></div>
+
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- Your JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+
+</html> 
