@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let map = L.map("map").setView([1.3521, 103.8198], 12);
+  let singapore = [1.29, 103.85]; // #1 Singapore latlng
+let map = L.map("map").setView(singapore, 13); 
 
- L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
 
-  map.invalidateSize();
+// setup the tile layers
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  // maxZoom: 19,
+  attribution:
+    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+}).addTo(map);
 
   axios.get("/api/locations")
     .then(res => {
