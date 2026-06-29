@@ -11,7 +11,7 @@ body {
 
 .sidebar h2 {
   text-align: center;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 20px;
   color: #333;
@@ -87,6 +87,50 @@ body {
   font-size: 16px;
   border-radius: 4px;
 }
+
+/* For the cards */
+#card-container {
+    margin-top: 15px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.card:hover {
+    background-color: #8eb4c9;
+}
+
+.card h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+}
+
+.card p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.category {
+    color: #666;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.rating {
+    color: #f39c12;
+    font-weight: bold;
+    margin: 5px 0 0;
+}
+
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
