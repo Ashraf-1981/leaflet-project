@@ -23,8 +23,7 @@ categoryButtons.forEach(button => {
         map.removeLayer(item.marker);
     });
 
-    // Only for All buttons to show all markers, use if...else
-    // You already created them once when the data loaded unlike cards 
+        // You already created them once when the data loaded unlike cards 
     markers.forEach(item => {
     if (
         selectedCategory === "All" ||

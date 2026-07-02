@@ -3,17 +3,70 @@ let map;
 let markers = [];
 let locations = [];
 
-document.addEventListener("DOMContentLoaded", function () {
-let singapore = [1.29, 103.85]; 
+// Create cards emoji in an object
+const categoryIcons = {
+    Nature: "🌿",
+    Food: "🍜",
+    Malls: "🛍️",
+    Landmarks: "🏛️"
+};
 
-map = L.map("map").setView(singapore, 13); 
+document.addEventListener("DOMContentLoaded", function () {
+let singapore = [1.29, 103.85];
+
+// Setting for user click at empty map for everything return as default
+const defaultCenter = singapore;
+const defaultZoom = 13;
+map = L.map("map").setView(defaultCenter, defaultZoom);
+
+// Detect a click on empty area on map
+map.on("click", () => {
+    // Clear all markers and cards
+     clearMapAndCards();
+    //  Return default map
+    map.setView(defaultCenter, defaultZoom);
+});
 
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  // maxZoom: 19,
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
+
+// Create custom icons
+const markerIcons = {
+    Nature: L.icon({
+        iconUrl: "images/marker-icon-green.png",
+        shadowUrl: "images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34]
+    }),
+
+    Food: L.icon({
+        iconUrl: "images/marker-icon-red.png",
+        shadowUrl: "images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34]
+    }),
+
+    Malls: L.icon({
+        iconUrl: "images/marker-icon-violet.png",
+        shadowUrl: "images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34]
+    }),
+
+    Landmarks: L.icon({
+        iconUrl: "images/marker-icon-blue.png",
+        shadowUrl: "images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34]
+    })
+};
 
 async function loadLocations() {
  
@@ -22,12 +75,14 @@ async function loadLocations() {
         locations = res.data;
 
         locations.forEach(loc => {
-            // Save marker inside markers array
-            const marker = L.marker([loc.lat, loc.lng])
-        .bindPopup(`
-        <strong>${loc.name}</strong><br>
+    // Save marker inside markers array
+        const marker = L.marker([loc.lat, loc.lng], {
+    icon: markerIcons[loc.category]
+}).bindPopup(`
+        <h3>${loc.name}</h3>
         📍 ${loc.address}<br>
-        🌿 ${loc.category}<br><br>
+       <strong>${categoryIcons[loc.category]} ${loc.category}
+</strong><br><br>
         ${loc.description}
     `);
 
@@ -41,9 +96,9 @@ async function loadLocations() {
       console.log(err);
     }
 }
-
 loadLocations();
 });
+
 
 // Create cards
 function displayCards(locations) {
@@ -58,7 +113,7 @@ function displayCards(locations) {
         card.className = "card";
 
         card.innerHTML = `
-            <h3>${location.name}</h3>
+            <h3>${categoryIcons[location.category]} ${location.name}</h3>
             <p class="category">${location.category}</p>
             <p class="rating">⭐ ${location.rating}</p>
         `;
