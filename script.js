@@ -14,6 +14,32 @@ const categoryIcons = {
 document.addEventListener("DOMContentLoaded", function () {
 let singapore = [1.29, 103.85];
 
+const searchInput = document.getElementById("search-input");
+// Listen user press the Enter key after type in the searchbar
+searchInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+        // Change the words to lowerCase
+        const searchText = searchInput.value.toLowerCase();
+        // Loop and Find through the markers [..]
+        const foundLocation = markers.find(item =>
+        // Include the search for partial name also
+        item.location.name.toLowerCase().includes(searchText)
+);
+    // Check if there is a matching attraction and create popUp
+    if (foundLocation) {
+    map.setView(
+        [foundLocation.location.lat, foundLocation.location.lng],18
+    );
+        foundLocation.marker.openPopup();
+
+}   else {
+    alert("Attraction not found.");
+}
+    console.log(foundLocation);
+    }
+});
+
 // Setting for user click at empty map for everything return as default
 const defaultCenter = singapore;
 const defaultZoom = 13;
@@ -34,37 +60,26 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // Create custom icons
+// https://github.com/pointhi/leaflet-color-markers
 const markerIcons = {
     Nature: L.icon({
         iconUrl: "images/marker-icon-green.png",
         shadowUrl: "images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
     }),
 
     Food: L.icon({
         iconUrl: "images/marker-icon-red.png",
         shadowUrl: "images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
     }),
 
     Malls: L.icon({
         iconUrl: "images/marker-icon-violet.png",
         shadowUrl: "images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
     }),
 
     Landmarks: L.icon({
         iconUrl: "images/marker-icon-blue.png",
         shadowUrl: "images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
     })
 };
 
@@ -102,18 +117,25 @@ loadLocations();
 
 // Create cards
 function displayCards(locations) {
-
     const cardContainer = document.getElementById("card-container");
 
     cardContainer.innerHTML = "";
 
     locations.forEach(location => {
-
         const card = document.createElement("div");
         card.className = "card";
 
+        // Create variable for save/unsave buttons
+        let heartIcon;
+
+        if (location.favourite) {
+            heartIcon = '<i class="fa-solid fa-heart"></i>';
+}       else {
+            heartIcon = '<i class="fa-regular fa-heart"></i>';
+}
         card.innerHTML = `
             <h3>${categoryIcons[location.category]} ${location.name}</h3>
+            <p class="favourite">${heartIcon}</p>
             <p class="category">${location.category}</p>
             <p class="rating">⭐ ${location.rating}</p>
         `;

@@ -131,6 +131,13 @@ body {
     margin: 5px 0 0;
 }
 
+/* For save/unsave heartIcon btn */
+.favourite {
+    font-size: 35px;
+    text-align: center;
+    margin: 8px 0;
+}
+
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
