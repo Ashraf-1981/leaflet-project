@@ -133,9 +133,19 @@ body {
 
 /* For save/unsave heartIcon btn */
 .favourite {
-    font-size: 35px;
     text-align: center;
     margin: 8px 0;
+}
+
+/* Saved/Unsaved button */
+.favourite-btn {
+    color: gray;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.fa-solid.favourite-btn {
+    color: red;
 }
 
 

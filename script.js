@@ -93,7 +93,7 @@ async function loadLocations() {
     // Save marker inside markers array
         const marker = L.marker([loc.lat, loc.lng], {
     icon: markerIcons[loc.category]
-}).bindPopup(`
+})  .bindPopup(`
         <h3>${loc.name}</h3>
         📍 ${loc.address}<br>
        <strong>${categoryIcons[loc.category]} ${loc.category}
@@ -126,12 +126,15 @@ function displayCards(locations) {
         card.className = "card";
 
         // Create variable for save/unsave buttons
+        // Create clickable buttons(favourite-btn) & locations where it belongs
         let heartIcon;
 
         if (location.favourite) {
-            heartIcon = '<i class="fa-solid fa-heart"></i>';
+           heartIcon = `Add <i class="fa-solid fa-heart favourite-btn" 
+           data-id="${location.id}"></i> Favourite`;
 }       else {
-            heartIcon = '<i class="fa-regular fa-heart"></i>';
+           heartIcon = `Add <i class="fa-regular fa-heart favourite-btn" 
+           data-id="${location.id}"></i> Favourite`;
 }
         card.innerHTML = `
             <h3>${categoryIcons[location.category]} ${location.name}</h3>
@@ -139,6 +142,8 @@ function displayCards(locations) {
             <p class="category">${location.category}</p>
             <p class="rating">⭐ ${location.rating}</p>
         `;
+
+
         // Make the cards clickable. JS create dynamically
         card.addEventListener("click", () => {
 
@@ -158,8 +163,44 @@ function displayCards(locations) {
 
 });
         cardContainer.appendChild(card);
+
+        // Favourite toggle,save/unsaved
+        // Stop clicking the cards too as it's in the cards. Separate them
+        const heart = card.querySelector(".favourite-btn");
+
+        // Send a PUT request to express server
+        heart.addEventListener("click", async (event) => {
+        event.stopPropagation();
+
+        const id = heart.dataset.id;
+
+        let favourite;
+
+        // This false/true is the new favourite value sent by frontend
+        // when heartIcon is clicked/unclicked
+        if (location.favourite) {
+            favourite = false;
+}       else {
+            favourite = true;
+}       
+        // Frontend ask Express find the id as (Read only first)
+await axios.put(`/api/locations/${id}`, {
+    favourite: favourite
+});
+
+// find the correct item in array
+const selected = locations.find(loc => loc.id === parseInt(id));
+
+if (selected) {
+    selected.favourite = favourite;
+}
+
+displayCards(locations);
+       
+});
     });
 }
+
 
 // Clear markers and cards when page loaded
 function clearMapAndCards() {
