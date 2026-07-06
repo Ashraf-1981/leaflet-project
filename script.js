@@ -26,12 +26,17 @@ searchInput.addEventListener("keydown", (event) => {
         // Include the search for partial name also
         item.location.name.toLowerCase().includes(searchText)
 );
-    // Check if there is a matching attraction and create popUp
+    // Check if there is a matching attraction
+    // Create popUp, marker and Zoom to it
     if (foundLocation) {
     map.setView(
         [foundLocation.location.lat, foundLocation.location.lng],18
-    );
+    );  
+        // Show marker,popUp and zoom
+        foundLocation.marker.addTo(map);
         foundLocation.marker.openPopup();
+        // Show only the searched card
+        displayCards([foundLocation.location]);
 
 }   else {
     alert("Attraction not found.");
@@ -90,14 +95,14 @@ async function loadLocations() {
         locations = res.data;
 
         locations.forEach(loc => {
+
     // Save marker inside markers array
         const marker = L.marker([loc.lat, loc.lng], {
-    icon: markerIcons[loc.category]
-})  .bindPopup(`
+        icon: markerIcons[loc.category]
+})      .bindPopup(`
         <h3>${loc.name}</h3>
         📍 ${loc.address}<br>
-       <strong>${categoryIcons[loc.category]} ${loc.category}
-</strong><br><br>
+       <strong>${categoryIcons[loc.category]} ${loc.category}</strong><br><br>
         ${loc.description}
     `);
 
@@ -111,7 +116,7 @@ async function loadLocations() {
       console.log(err);
     }
 }
-loadLocations();
+    loadLocations();
 });
 
 
@@ -130,10 +135,10 @@ function displayCards(locations) {
         let heartIcon;
 
         if (location.favourite) {
-           heartIcon = `Add <i class="fa-solid fa-heart favourite-btn" 
+           heartIcon = ` Add <i class="fa-solid fa-heart favourite-btn" 
            data-id="${location.id}"></i> Favourite`;
 }       else {
-           heartIcon = `Add <i class="fa-regular fa-heart favourite-btn" 
+           heartIcon = `<span class="add-text">Add</span><i class="fa-regular fa-heart favourite-btn" 
            data-id="${location.id}"></i> Favourite`;
 }
         card.innerHTML = `
@@ -162,7 +167,7 @@ function displayCards(locations) {
     selectedMarker.marker.openPopup();
 
 });
-        cardContainer.appendChild(card);
+    cardContainer.appendChild(card);
 
         // Favourite toggle,save/unsaved
         // Stop clicking the cards too as it's in the cards. Separate them
@@ -184,18 +189,16 @@ function displayCards(locations) {
             favourite = true;
 }       
         // Frontend ask Express find the id as (Read only first)
-await axios.put(`/api/locations/${id}`, {
-    favourite: favourite
+        await axios.put(`/api/locations/${id}`, {
+        favourite: favourite
 });
 
 // find the correct item in array
 const selected = locations.find(loc => loc.id === parseInt(id));
 
-if (selected) {
-    selected.favourite = favourite;
-}
+        if (selected) {selected.favourite = favourite;}
 
-displayCards(locations);
+        displayCards(locations);
        
 });
     });

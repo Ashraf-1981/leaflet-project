@@ -97,11 +97,12 @@ body {
     background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
     cursor: pointer;
     transition: 0.2s;
     text-align: center;
+    line-height: 1.5;
 }
 
 .card:hover {
@@ -109,39 +110,51 @@ body {
 }
 
 .card h3 {
-    margin: 0 0 6px;
-    font-size: 15px;
+    margin: 0 0 8px;
+    font-size: 18px;
 }
 
 .card p {
-    margin: 0;
+    margin: 4px 0;
     color: #666;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .category {
     color: #666;
     font-size: 14px;
-    margin: 5px 0;
+    margin: 6px 0;
 }
 
 .rating {
     color: #f39c12;
     font-weight: bold;
-    margin: 5px 0 0;
+    margin: 8px 0 0;
+     font-size: 15px;
 }
 
 /* For save/unsave heartIcon btn */
 .favourite {
-    text-align: center;
-    margin: 8px 0;
+    display: flex;             
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0 4px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.add-text {
+    color: #093bef;
+    font-weight: 700;
 }
 
 /* Saved/Unsaved button */
 .favourite-btn {
     color: gray;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .fa-solid.favourite-btn {
