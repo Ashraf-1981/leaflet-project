@@ -1,12 +1,8 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
 body {
   display: flex;
   height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .sidebar h2 {
@@ -18,16 +14,16 @@ body {
 }
 
 /* LEFT SIDE 40% */
-.sidebar {
-  background-color: #dee0e1;
-  width: 15%;
-  height: 100vh;
-  overflow-y: auto;
-  padding: 15px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 0px 15px 15px 15px;
+ .sidebar {
+    background-color: #dee0e1;
+    width: 15%;
+    min-width: 220px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0 15px 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .category-btn {
@@ -154,9 +150,15 @@ body {
     color: gray;
     font-size: 1.3rem;
     cursor: pointer;
-    transition: 0.2s;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* Hovers on the unsaved heartIcon button */
+.favourite-btn:hover {
+    color: red;
+}
+
+/* After user click to save/add to favourite */
 .fa-solid.favourite-btn {
     color: red;
 }
