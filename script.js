@@ -3,6 +3,12 @@ let map;
 let markers = [];
 let locations = [];
 
+// layer group
+const natureLayer = L.layerGroup();
+const foodLayer = L.layerGroup();
+const mallLayer = L.layerGroup();
+const landmarkLayer = L.layerGroup();
+
 // Create cards emoji in an object
 const categoryIcons = {
     Nature: "🌿",
@@ -49,6 +55,7 @@ searchInput.addEventListener("keydown", (event) => {
 const defaultCenter = singapore;
 const defaultZoom = 13;
 map = L.map("map").setView(defaultCenter, defaultZoom);
+// clearMapAndCards();
 
 // Detect a click on empty area on map
 map.on("click", () => {
@@ -110,6 +117,15 @@ async function loadLocations() {
             marker: marker,
             location: loc
 });
+        if (loc.category === "Nature") {
+            natureLayer.addLayer(marker);
+}       else if (loc.category === "Food") {
+            foodLayer.addLayer(marker);
+}       else if (loc.category === "Malls") {
+            mallLayer.addLayer(marker);
+}       else if (loc.category === "Landmarks") {
+            landmarkLayer.addLayer(marker);
+}
         });
         
     } catch (err) {
@@ -205,13 +221,46 @@ const selected = locations.find(loc => loc.id === parseInt(id));
 }
 
 
-// Clear markers and cards when page loaded
+// Clear markers and cards and radio button when page loaded
 function clearMapAndCards() {
 
-    markers.forEach(item => {
-        map.removeLayer(item.marker);
-    });
+    map.removeLayer(natureLayer);
+    map.removeLayer(foodLayer);
+    map.removeLayer(mallLayer);
+    map.removeLayer(landmarkLayer);
 
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
+
+    document.querySelectorAll('input[name="view"]').forEach(radio => {
+    radio.checked = false;
+});
+
+
+// Detect a click on empty area on map
+map.on("click", () => {
+    // Clear all markers and cards
+     clearMapAndCards();
+    //  Return default map
+    map.setView(defaultCenter, defaultZoom);
+});
 }
+
+// Favourite view radio buttons
+const viewRadios = document.querySelectorAll('input[name="view"]');
+
+    viewRadios.forEach(radio => {
+        radio.addEventListener("change", () => {
+
+    if (radio.value === "top") {
+        const topRatedLocations = locations.filter(location => location.rating >= 4.5);
+            
+        displayCards(topRatedLocations);
+        
+    } else {
+
+        displayCards(locations);
+}
+
+    });
+});

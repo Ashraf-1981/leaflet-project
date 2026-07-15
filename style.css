@@ -13,6 +13,24 @@ body {
   color: #333;
 }
 
+/* View and radio button */
+.sidebar h4 {
+    margin-bottom: 2px;
+}
+
+/* Dropdown */
+.sidebar select {
+    width: 90%;
+    padding: 8px 12px;
+    margin: 10px auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 /* LEFT SIDE 40% */
  .sidebar {
     background-color: #dee0e1;

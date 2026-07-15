@@ -32,12 +32,39 @@
     <button class="category-btn" data-category="Food">Food</button>
     <button class="category-btn" data-category="Malls">Malls</button>
     <button class="category-btn" data-category="Landmarks">Landmarks</button>
+
+    <!-- Dropdown -->
+    <select id="sort-dropdown">
+    <option value="">Sort Attractions</option>
+    <option value="name">Name (A-Z)</option>
+    <option value="rating">Rating (Highest)</option>
+</select>
+
+    <!-- Checkbox -->
+  <label>
+
+    <!-- I use favourites Only because I have already created
+     the favourite feature(heartIcon) -->
+    <input type="checkbox" id="favourite-checkbox">
+    Show Favourites Only
+
+</label>
+
+    <!-- Radio button -->
+    <h4>View</h4>
+      <input type="radio" id="show-all" name="view" value="all">
+      <label for="show-all">All</label>
+
+      <input type="radio" id="show-top" name="view" value="top">
+      <label for="show-top">Top Rated (4.5+)</label>
+
   </div>
 
   <div id="card-container"></div>
 
 </div>
 
+    <!-- Search bar Input -->
     <div class="search-wrapper">
       <input type="text" id="search-input" placeholder="Search attractions...">
       <i class="fa-solid fa-camera"></i>
