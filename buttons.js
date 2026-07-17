@@ -30,12 +30,7 @@ categoryButtons.forEach(button => {
 
         // You already created them once when the data loaded unlike cards 
     markers.forEach(item => {
-    // if (
-    //     selectedCategory === "All" ||
-    //     item.location.category === selectedCategory
-    // ) {
-    //    item.marker.addTo(map);
-    // }
+    
     if (selectedCategory === "Nature") {
     natureLayer.addTo(map);
 }

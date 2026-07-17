@@ -128,13 +128,14 @@ body {
     font-size: 18px;
 }
 
+/* The rating numbers */
 .card p {
     margin: 4px 0;
     color: #666;
     font-size: 15px;
 }
 
-.category {
+ .card .category {
     color: #666;
     font-size: 14px;
     margin: 6px 0;
@@ -158,6 +159,8 @@ body {
     font-weight: 500;
 }
 
+/* Before user click the Favourite heartIcon is blue */
+/* After click, .card p take over */
 .add-text {
     color: #093bef;
     font-weight: 700;
@@ -211,4 +214,3 @@ body {
   }
 
 }
-
