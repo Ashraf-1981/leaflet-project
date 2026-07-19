@@ -27,10 +27,7 @@ categoryButtons.forEach(button => {
         map.removeLayer(mallLayer);
         map.removeLayer(landmarkLayer);       
 
-
-        // You already created them once when the data loaded unlike cards 
-    markers.forEach(item => {
-    
+   
     if (selectedCategory === "Nature") {
     natureLayer.addTo(map);
 }
@@ -49,8 +46,6 @@ else if (selectedCategory === "All") {
     mallLayer.addTo(map);
     landmarkLayer.addTo(map);
 }
-
-});
     console.log(selectedCategory);
 
     });
