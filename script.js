@@ -2,6 +2,7 @@
 let map;
 let markers = [];
 let locations = [];
+let activeMarker = null;
 
 // layer group
 const natureLayer = L.layerGroup();
@@ -41,6 +42,7 @@ searchInput.addEventListener("keydown", (event) => {
         // Show marker,popUp and zoom
         foundLocation.marker.addTo(map);
         foundLocation.marker.openPopup();
+        activeMarker = foundLocation.marker; 
         // Show only the searched card
         displayCards([foundLocation.location]);
 
@@ -55,9 +57,7 @@ searchInput.addEventListener("keydown", (event) => {
 const defaultCenter = singapore;
 const defaultZoom = 13;
 map = L.map("map").setView(defaultCenter, defaultZoom);
-// clearMapAndCards();
 
-// Detect a click on empty area on map
 map.on("click", () => {
     // Clear all markers and cards
      clearMapAndCards();
@@ -181,6 +181,7 @@ function displayCards(locations) {
     // Make the marker appear 1st
     selectedMarker.marker.addTo(map);
     selectedMarker.marker.openPopup();
+    activeMarker = selectedMarker.marker;
 
 });
     cardContainer.appendChild(card);
@@ -229,20 +230,16 @@ function clearMapAndCards() {
     map.removeLayer(mallLayer);
     map.removeLayer(landmarkLayer);
 
+      if (activeMarker) {
+        map.removeLayer(activeMarker);
+        activeMarker = null;
+    }
+
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
     document.querySelectorAll('input[name="view"]').forEach(radio => {
     radio.checked = false;
-});
-
-
-// Detect a click on empty area on map
-map.on("click", () => {
-    // Clear all markers and cards
-     clearMapAndCards();
-    //  Return default map
-    map.setView(defaultCenter, defaultZoom);
 });
 }
 
