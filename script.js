@@ -26,9 +26,9 @@ const searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keydown", (event) => {
 
     if (event.key === "Enter") {
+
         // Change the words to lowerCase
         const searchText = searchInput.value.toLowerCase();
-        // Loop and Find through the markers [..]
         const foundLocation = markers.find(item =>
         // Include the search for partial name also
         item.location.name.toLowerCase().includes(searchText)
@@ -42,8 +42,8 @@ searchInput.addEventListener("keydown", (event) => {
         // Show marker,popUp and zoom
         foundLocation.marker.addTo(map);
         foundLocation.marker.openPopup();
+        // and save it as an active marker
         activeMarker = foundLocation.marker; 
-        // Show only the searched card
         displayCards([foundLocation.location]);
 
 }   else {
@@ -59,17 +59,15 @@ const defaultZoom = 13;
 map = L.map("map").setView(defaultCenter, defaultZoom);
 
 map.on("click", () => {
-    // Clear all markers and cards
-     clearMapAndCards();
-    //  Return default map
+    clearMapAndCards();
     map.setView(defaultCenter, defaultZoom);
 });
-
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
+
 
 // Create custom icons
 // https://github.com/pointhi/leaflet-color-markers
@@ -98,6 +96,7 @@ const markerIcons = {
 async function loadLocations() {
  
     try {
+        // frontend/browser send a req to backend using Axios via Express
         const res = await axios.get("/api/locations");
         locations = res.data;
 
@@ -114,6 +113,7 @@ async function loadLocations() {
     `);
 
             markers.push({
+            // create 2 new objects(properties) after push
             marker: marker,
             location: loc
 });
@@ -181,9 +181,11 @@ function displayCards(locations) {
     // Make the marker appear 1st
     selectedMarker.marker.addTo(map);
     selectedMarker.marker.openPopup();
+    // and save it as an active marker
     activeMarker = selectedMarker.marker;
 
 });
+    // add to the empty cardContainer 
     cardContainer.appendChild(card);
 
         // Favourite toggle,save/unsaved
@@ -205,16 +207,18 @@ function displayCards(locations) {
 }       else {
             favourite = true;
 }       
-        // Frontend ask Express find the id as (Read only first)
+        // Frontend ask Express(backend) at this endpoint to find the id(read)
         await axios.put(`/api/locations/${id}`, {
         favourite: favourite
 });
 
-// find the correct item in array
+// find the correct loc in the locations and change to integer
 const selected = locations.find(loc => loc.id === parseInt(id));
 
-        if (selected) {selected.favourite = favourite;}
-
+        // This line then update the favourite property
+        if (selected) {
+            selected.favourite = favourite;
+        }
         displayCards(locations);
        
 });
@@ -222,7 +226,7 @@ const selected = locations.find(loc => loc.id === parseInt(id));
 }
 
 
-// Clear markers and cards and radio button when page loaded
+// Clear markers, cards, radio button and checkbox when page loaded
 function clearMapAndCards() {
 
     map.removeLayer(natureLayer);
@@ -232,11 +236,14 @@ function clearMapAndCards() {
 
       if (activeMarker) {
         map.removeLayer(activeMarker);
-        activeMarker = null;
+        // After remove it from the map, reset the activeMarker back to null
+         activeMarker = null;
     }
 
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
+
+    favouriteCheckbox.checked = false;
 
     document.querySelectorAll('input[name="view"]').forEach(radio => {
     radio.checked = false;

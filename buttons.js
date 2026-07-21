@@ -4,11 +4,12 @@ const categoryButtons = document.querySelectorAll(".category-btn");
 categoryButtons.forEach(button => {
     button.addEventListener("click", () => {
 
+        // dataset gives access to attribute in html
         const selectedCategory = button.dataset.category;
         
       // Only for All buttons to show all cards, use if...else 
       if (selectedCategory === "All") {
-    displayCards(locations);
+      displayCards(locations);
 } else {
     // Filter - new array that only match what user click
     const filteredLocations = locations.filter(location =>
@@ -80,6 +81,7 @@ else if (selectedCategory === "All") {
 
     if (favouriteCheckbox.checked) {
 
+    // this favourite is refering to the heartIcon click/unclick to appear   
     const favouriteLocations = locations.filter(location =>
         location.favourite
         );

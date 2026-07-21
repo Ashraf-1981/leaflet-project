@@ -11,28 +11,27 @@ const BIN_READ_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 // For PUT to amend
 const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-
+// Create express applications
 const app = express();
 const port = 3000;
 
-// IMPORTANT
+// IMPORTANT. _dirame:project folder like index.html, css etc
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Restful API - "Get & Put"
 // GET /latest → works (read data)
 // PUT /latest → 404 (not allowed)
 
-// HOME PAGE(/) and create GET route in Express
+// HOME PAGE(/). Express get req from frontend/browser and res back index.html to them
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// Use async.... to communicate with JsonBin
+// Use async.... express get req from frontend to communicate with JsonBin/backend
+// to get something
 app.get('/api/locations', async (req, res) => {
   
-    // Start to talk to JsonBin and download
     try {
     const response = await axios.get(BIN_READ_URL, {
       headers: {
@@ -46,12 +45,13 @@ app.get('/api/locations', async (req, res) => {
   }
 });
 
-  // Create PUT route in Express(:id is the parameter)
-  // :id and favourite lets Express know which location is the id in
+  // "Express receives a PUT request to update, from the frontend.(:id is the parameter)
+  // :id and favourite lets Express know which location to find and change
     app.put("/api/locations/:id", async (req, res) => {
 
     try {
         const id = parseInt(req.params.id);
+        // { favourite: favourite } — is the request body is from scrip.js
         const favourite = req.body.favourite;
 
         // GET data from JSONBin
